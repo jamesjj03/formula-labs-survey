@@ -1,0 +1,1083 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Formula Lab Survey</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Space+Grotesk:wght@600;700&display=swap" rel="stylesheet">
+
+<style>
+:root{
+  --bg:#fff7ec;
+  --paper:#ffffff;
+  --paper2:#fffaf2;
+  --ink:#141414;
+  --muted:#6f655f;
+  --line:rgba(20,20,20,.1);
+
+  --red:#ff2d55;
+  --orange:#ff8a00;
+  --yellow:#ffd23f;
+  --lime:#b9f227;
+  --cyan:#22d3ee;
+  --blue:#4263ff;
+  --purple:#8b5cf6;
+
+  --shadow:0 24px 70px rgba(72,35,0,.12);
+}
+
+*{box-sizing:border-box}
+
+html{scroll-behavior:smooth}
+
+body{
+  margin:0;
+  min-height:100vh;
+  font-family:Inter,system-ui,sans-serif;
+  color:var(--ink);
+  background:
+    radial-gradient(circle at 12% 8%, rgba(255,45,85,.22), transparent 28%),
+    radial-gradient(circle at 86% 10%, rgba(34,211,238,.22), transparent 30%),
+    radial-gradient(circle at 70% 92%, rgba(255,138,0,.20), transparent 32%),
+    linear-gradient(135deg,#fff9ef,#fff4e4 48%,#f5fbff);
+}
+
+body:before{
+  content:"";
+  position:fixed;
+  inset:0;
+  background-image:
+    linear-gradient(rgba(20,20,20,.035) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(20,20,20,.035) 1px, transparent 1px);
+  background-size:42px 42px;
+  pointer-events:none;
+  mask-image:linear-gradient(to bottom,rgba(0,0,0,.7),transparent 82%);
+}
+
+.wrap{
+  width:min(960px,92vw);
+  margin:0 auto;
+  padding:24px 0 70px;
+  position:relative;
+}
+
+.topbar{
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  margin-bottom:24px;
+}
+
+.logo{
+  display:flex;
+  align-items:center;
+  gap:12px;
+  background:rgba(255,255,255,.7);
+  border:1px solid var(--line);
+  box-shadow:0 14px 45px rgba(0,0,0,.06);
+  backdrop-filter:blur(18px);
+  padding:10px 16px 10px 10px;
+  border-radius:999px;
+  font-weight:950;
+}
+
+.logoMark{
+  width:38px;
+  height:38px;
+  border-radius:15px;
+  background:conic-gradient(from 190deg,var(--red),var(--orange),var(--yellow),var(--cyan),var(--blue),var(--red));
+  box-shadow:0 10px 28px rgba(255,45,85,.22);
+}
+
+.hero{
+  text-align:center;
+  padding:42px 0 28px;
+  animation:rise .55s ease both;
+}
+
+.pill{
+  display:inline-flex;
+  align-items:center;
+  gap:8px;
+  padding:10px 15px;
+  border-radius:999px;
+  background:rgba(255,255,255,.7);
+  border:1px solid var(--line);
+  box-shadow:0 12px 34px rgba(0,0,0,.05);
+  font-weight:950;
+  color:#32241f;
+  margin-bottom:18px;
+}
+
+h1{
+  margin:0 auto;
+  max-width:840px;
+  font-family:"Space Grotesk",Inter,sans-serif;
+  font-size:clamp(42px,8vw,84px);
+  line-height:.9;
+  letter-spacing:-.075em;
+}
+
+.grad{
+  background:linear-gradient(90deg,var(--red),var(--orange),var(--blue),var(--purple));
+  -webkit-background-clip:text;
+  background-clip:text;
+  color:transparent;
+}
+
+.heroText{
+  max-width:640px;
+  margin:18px auto 0;
+  font-size:18px;
+  color:#5d524c;
+  line-height:1.58;
+}
+
+.stats{
+  display:flex;
+  justify-content:center;
+  flex-wrap:wrap;
+  gap:10px;
+  margin-top:26px;
+}
+
+.stat{
+  background:rgba(255,255,255,.72);
+  border:1px solid var(--line);
+  border-radius:999px;
+  padding:10px 14px;
+  font-size:13px;
+  font-weight:950;
+  box-shadow:0 12px 35px rgba(0,0,0,.045);
+}
+
+.progressShell{
+  position:sticky;
+  top:0;
+  z-index:20;
+  padding:9px 0 14px;
+  backdrop-filter:blur(16px);
+}
+
+.progressBox{
+  background:rgba(255,255,255,.72);
+  border:1px solid var(--line);
+  border-radius:999px;
+  padding:8px;
+  box-shadow:0 12px 36px rgba(0,0,0,.07);
+}
+
+.progress{
+  height:10px;
+  width:0%;
+  border-radius:999px;
+  background:linear-gradient(90deg,var(--red),var(--orange),var(--yellow),var(--cyan),var(--blue));
+  transition:.25s ease;
+}
+
+form{
+  background:rgba(255,255,255,.78);
+  border:1px solid var(--line);
+  border-radius:36px;
+  box-shadow:var(--shadow);
+  overflow:hidden;
+  backdrop-filter:blur(22px);
+  animation:rise .65s ease both;
+}
+
+.section{
+  padding:34px;
+  border-bottom:1px solid var(--line);
+}
+
+.section:last-child{border-bottom:0}
+
+.sectionHead{
+  text-align:center;
+  margin-bottom:24px;
+}
+
+h2{
+  margin:0;
+  font-family:"Space Grotesk",Inter,sans-serif;
+  font-size:31px;
+  letter-spacing:-.045em;
+}
+
+.help{
+  color:var(--muted);
+  margin:8px auto 0;
+  max-width:620px;
+  line-height:1.5;
+}
+
+.fieldLabel{
+  display:block;
+  font-weight:950;
+  margin:20px 0 9px;
+  letter-spacing:-.025em;
+}
+
+input,select,textarea{
+  width:100%;
+  border:1px solid var(--line);
+  border-radius:18px;
+  padding:15px 16px;
+  font:inherit;
+  background:rgba(255,255,255,.78);
+  color:var(--ink);
+  outline:none;
+  transition:.2s ease;
+}
+
+input:focus,select:focus,textarea:focus{
+  border-color:rgba(66,99,255,.45);
+  box-shadow:0 0 0 5px rgba(66,99,255,.11);
+}
+
+textarea{
+  min-height:110px;
+  resize:vertical;
+}
+
+.optionGrid{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(175px,1fr));
+  gap:12px;
+}
+
+.option{
+  border:1px solid var(--line);
+  background:linear-gradient(180deg,rgba(255,255,255,.82),rgba(255,255,255,.55));
+  border-radius:20px;
+  padding:15px;
+  display:flex;
+  align-items:center;
+  gap:11px;
+  cursor:pointer;
+  user-select:none;
+  transition:.18s ease;
+  min-height:60px;
+  font-weight:850;
+  box-shadow:0 10px 25px rgba(0,0,0,.035);
+}
+
+.option:hover{
+  transform:translateY(-2px);
+  border-color:rgba(255,45,85,.28);
+}
+
+.option input{
+  width:18px;
+  height:18px;
+  accent-color:var(--red);
+}
+
+.option:has(input:checked){
+  border-color:rgba(255,45,85,.48);
+  background:linear-gradient(135deg,rgba(255,45,85,.16),rgba(255,138,0,.12),rgba(34,211,238,.08));
+  box-shadow:0 0 0 5px rgba(255,45,85,.08),0 16px 35px rgba(255,45,85,.08);
+}
+
+.sliderCard{
+  background:rgba(255,255,255,.64);
+  border:1px solid var(--line);
+  border-radius:24px;
+  padding:18px;
+  margin-top:14px;
+}
+
+.sliderTop{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  gap:12px;
+  font-weight:950;
+  margin-bottom:12px;
+}
+
+output{
+  min-width:46px;
+  text-align:center;
+  border-radius:999px;
+  padding:8px 10px;
+  background:linear-gradient(135deg,var(--red),var(--orange));
+  color:white;
+  font-weight:950;
+}
+
+input[type="range"]{
+  padding:0;
+  height:10px;
+  appearance:none;
+  background:linear-gradient(90deg,rgba(255,45,85,.25),rgba(255,138,0,.25),rgba(34,211,238,.25));
+  border:0;
+  border-radius:999px;
+}
+
+input[type="range"]::-webkit-slider-thumb{
+  appearance:none;
+  width:25px;
+  height:25px;
+  border-radius:50%;
+  background:#fff;
+  border:5px solid var(--red);
+  box-shadow:0 0 24px rgba(255,45,85,.42);
+  cursor:pointer;
+}
+
+.actions{
+  display:flex;
+  justify-content:center;
+  flex-wrap:wrap;
+  gap:12px;
+  padding:28px 34px 36px;
+}
+
+button{
+  border:0;
+  border-radius:18px;
+  padding:15px 20px;
+  font-weight:950;
+  cursor:pointer;
+  font-size:15px;
+  transition:.18s ease;
+}
+
+button:hover{transform:translateY(-2px)}
+
+.primary{
+  background:linear-gradient(135deg,var(--red),var(--orange));
+  color:white;
+  box-shadow:0 18px 38px rgba(255,45,85,.2);
+}
+
+.secondary{
+  background:#171717;
+  color:white;
+}
+
+.light{
+  background:#f2ebdf;
+  color:#151515;
+}
+
+.status{
+  display:none;
+  margin:0 34px 34px;
+  text-align:center;
+  background:rgba(55,242,155,.18);
+  border:1px solid rgba(14,160,92,.25);
+  padding:16px;
+  border-radius:20px;
+  font-weight:950;
+}
+
+.modal{
+  display:none;
+  position:fixed;
+  inset:0;
+  z-index:100;
+  background:rgba(0,0,0,.42);
+  backdrop-filter:blur(10px);
+  align-items:center;
+  justify-content:center;
+  padding:20px;
+}
+
+.modalBox{
+  width:min(520px,96vw);
+  background:white;
+  border-radius:30px;
+  padding:26px;
+  box-shadow:0 30px 90px rgba(0,0,0,.22);
+  animation:rise .3s ease both;
+}
+
+.adminPanel{
+  display:none;
+  margin:22px 0;
+  background:rgba(255,255,255,.82);
+  border:1px solid var(--line);
+  border-radius:30px;
+  padding:24px;
+  box-shadow:var(--shadow);
+}
+
+.adminGrid{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:16px;
+}
+
+.adminPanel textarea{
+  min-height:150px;
+  font-family:ui-monospace,Menlo,Consolas,monospace;
+  font-size:13px;
+}
+
+.dataPanel{
+  margin-top:24px;
+  background:rgba(255,255,255,.8);
+  border:1px solid var(--line);
+  border-radius:28px;
+  padding:22px;
+  box-shadow:var(--shadow);
+}
+
+.dataPanel summary{
+  cursor:pointer;
+  font-weight:950;
+}
+
+pre{
+  white-space:pre-wrap;
+  word-break:break-word;
+  background:#111;
+  color:#eaffea;
+  padding:16px;
+  border-radius:18px;
+  max-height:340px;
+  overflow:auto;
+}
+
+@keyframes rise{
+  from{opacity:0;transform:translateY(16px)}
+  to{opacity:1;transform:translateY(0)}
+}
+
+@media(max-width:760px){
+  .section{padding:26px 18px}
+  .actions{padding:24px 18px 30px}
+  .adminGrid{grid-template-columns:1fr}
+}
+</style>
+</head>
+
+<body>
+<div class="wrap">
+
+  <div class="topbar">
+    <div class="logo">
+      <div class="logoMark"></div>
+      <span id="brandName">Formula Lab</span>
+    </div>
+  </div>
+
+  <section class="adminPanel" id="adminPanel">
+    <div class="sectionHead">
+      <h2>Admin Console</h2>
+      <p class="help">Edit copy, options, export data, and tune the survey without touching the code.</p>
+    </div>
+
+    <div class="adminGrid">
+      <div>
+        <label class="fieldLabel">Brand name</label>
+        <input id="adminBrandName">
+      </div>
+      <div>
+        <label class="fieldLabel">Hero badge</label>
+        <input id="adminBadge">
+      </div>
+      <div>
+        <label class="fieldLabel">Hero title</label>
+        <input id="adminHeroTitle">
+      </div>
+      <div>
+        <label class="fieldLabel">Hero highlight</label>
+        <input id="adminHeroHighlight">
+      </div>
+      <div style="grid-column:1/-1">
+        <label class="fieldLabel">Hero text</label>
+        <textarea id="adminHeroText"></textarea>
+      </div>
+      <div>
+        <label class="fieldLabel">Current pre-workout brands</label>
+        <textarea id="adminBrands"></textarea>
+      </div>
+      <div>
+        <label class="fieldLabel">Flavor options</label>
+        <textarea id="adminFlavors"></textarea>
+      </div>
+      <div>
+        <label class="fieldLabel">Effect options</label>
+        <textarea id="adminEffects"></textarea>
+      </div>
+      <div>
+        <label class="fieldLabel">Side-effect options</label>
+        <textarea id="adminHates"></textarea>
+      </div>
+    </div>
+
+    <div class="actions">
+      <button class="primary" type="button" id="saveAdmin">Save Admin Changes</button>
+      <button class="secondary" type="button" id="downloadJsonAdmin">Export JSON</button>
+      <button class="secondary" type="button" id="downloadCsvAdmin">Export CSV</button>
+      <button class="light" type="button" id="resetAdmin">Reset Defaults</button>
+      <button class="light" type="button" id="lockAdmin">Lock Admin</button>
+    </div>
+  </section>
+
+  <section class="hero">
+    <div class="pill" id="heroBadge">⚡ Pre-Workout Research</div>
+    <h1><span id="heroTitle">Build the next</span> <span class="grad" id="heroHighlight">clean pre.</span></h1>
+    <p class="heroText" id="heroText">
+      Quick survey. Real gym feedback. Help shape a cleaner pre-workout before the formula is built.
+    </p>
+
+    <div class="stats">
+      <div class="stat">2–3 minutes</div>
+      <div class="stat">No spam</div>
+      <div class="stat">Flavor + pump + focus</div>
+      <div class="stat">Built from real answers</div>
+    </div>
+  </section>
+
+  <div class="progressShell">
+    <div class="progressBox"><div class="progress" id="progress"></div></div>
+  </div>
+
+  <form id="surveyForm">
+
+    <div class="section">
+      <div class="sectionHead">
+        <h2>Your gym profile</h2>
+        <p class="help">This helps us understand whose answers are casual, advanced, or somewhere in the middle.</p>
+      </div>
+
+      <label class="fieldLabel">How much do you know about pre-workout/supplements?</label>
+      <select name="knowledge" required>
+        <option value="">Choose one</option>
+        <option value="1">Beginner</option>
+        <option value="2">Casual user</option>
+        <option value="3">Regular gym-goer</option>
+        <option value="4">Very knowledgeable</option>
+        <option value="5">Advanced / ingredient nerd</option>
+      </select>
+
+      <label class="fieldLabel">How often do you train?</label>
+      <select name="trainingFrequency" required>
+        <option value="">Choose one</option>
+        <option>1–2 days/week</option>
+        <option>3–4 days/week</option>
+        <option>5–6 days/week</option>
+        <option>Every day / athlete mode</option>
+      </select>
+
+      <label class="fieldLabel">What do you mainly train for?</label>
+      <div class="optionGrid" id="trainingGoalOptions"></div>
+    </div>
+
+    <div class="section">
+      <div class="sectionHead">
+        <h2>What should it do?</h2>
+        <p class="help">Pick the effects you actually care about. This feeds the formula signal score.</p>
+      </div>
+
+      <label class="fieldLabel">Most important effects</label>
+      <div class="optionGrid" id="effectOptions"></div>
+
+      <div class="sliderCard">
+        <div class="sliderTop"><span>Pump priority</span><output>5</output></div>
+        <input type="range" name="pumpScore" min="1" max="10" value="5">
+      </div>
+
+      <div class="sliderCard">
+        <div class="sliderTop"><span>Focus priority</span><output>5</output></div>
+        <input type="range" name="focusScore" min="1" max="10" value="5">
+      </div>
+
+      <div class="sliderCard">
+        <div class="sliderTop"><span>Energy priority</span><output>5</output></div>
+        <input type="range" name="energyScore" min="1" max="10" value="5">
+      </div>
+    </div>
+
+    <div class="section">
+      <div class="sectionHead">
+        <h2>Caffeine + side effects</h2>
+        <p class="help">This tells us whether people want clean energy, stim-free, or something stronger.</p>
+      </div>
+
+      <label class="fieldLabel">Ideal caffeine level</label>
+      <select name="caffeinePreference" required>
+        <option value="">Choose one</option>
+        <option value="stim-free">Stim-free / no caffeine</option>
+        <option value="low">Low caffeine</option>
+        <option value="moderate">Moderate caffeine</option>
+        <option value="high">High caffeine</option>
+        <option value="depends">Depends on the day</option>
+      </select>
+
+      <div class="sliderCard">
+        <div class="sliderTop"><span>Caffeine sensitivity</span><output>5</output></div>
+        <input type="range" name="caffeineSensitivity" min="1" max="10" value="5">
+      </div>
+
+      <label class="fieldLabel">What makes you stop using a pre?</label>
+      <div class="optionGrid" id="hateOptions"></div>
+    </div>
+
+    <div class="section">
+      <div class="sectionHead">
+        <h2>Flavor + feel</h2>
+        <p class="help">Taste matters. Texture matters. Nobody wants a tub of flavored sidewalk dust.</p>
+      </div>
+
+      <label class="fieldLabel">Flavor types you’d actually buy</label>
+      <div class="optionGrid" id="flavorOptions"></div>
+
+      <div class="sliderCard">
+        <div class="sliderTop"><span>Sweetness</span><output>5</output></div>
+        <input type="range" name="sweetness" min="1" max="10" value="5">
+      </div>
+
+      <div class="sliderCard">
+        <div class="sliderTop"><span>Sourness</span><output>5</output></div>
+        <input type="range" name="sourness" min="1" max="10" value="5">
+      </div>
+    </div>
+
+    <div class="section">
+      <div class="sectionHead">
+        <h2>What do you buy now?</h2>
+        <p class="help">Pick a known brand or type whatever you use.</p>
+      </div>
+
+      <label class="fieldLabel">Current pre-workout</label>
+      <input name="currentBrand" list="brandList" placeholder="Ghost, Bucked Up, Total War, Ryse, C4, Gorilla Mode...">
+      <datalist id="brandList"></datalist>
+
+      <label class="fieldLabel">What price feels fair for a full tub?</label>
+      <select name="priceTarget" required>
+        <option value="">Choose one</option>
+        <option value="25">$25 or less</option>
+        <option value="30">$30</option>
+        <option value="35">$35</option>
+        <option value="40">$40</option>
+        <option value="45">$45</option>
+        <option value="50">$50+</option>
+      </select>
+
+      <label class="fieldLabel">How often do you buy pre-workout?</label>
+      <select name="buyFrequency">
+        <option value="">Choose one</option>
+        <option>Never</option>
+        <option>Every few months</option>
+        <option>Every 1–2 months</option>
+        <option>Monthly</option>
+        <option>Multiple times per month</option>
+      </select>
+    </div>
+
+    <div class="section">
+      <div class="sectionHead">
+        <h2>Final answer</h2>
+        <p class="help">This is where the useful honesty usually shows up.</p>
+      </div>
+
+      <label class="fieldLabel">What would make you switch from your current pre-workout?</label>
+      <textarea name="switchReason" placeholder="Better price, better taste, cleaner formula, better pump, no crash, more focus, whatever."></textarea>
+
+      <label class="fieldLabel">Email or Instagram handle optional</label>
+      <input name="contact" placeholder="Optional">
+    </div>
+
+    <div class="actions">
+      <button class="primary" type="submit">Submit Response</button>
+    </div>
+
+    <div class="status" id="statusBox">Saved. Thanks for helping build the formula.</div>
+  </form>
+
+  <details class="dataPanel" id="dataPanel" style="display:none">
+    <summary>Local Data Preview</summary>
+    <pre id="preview">[]</pre>
+  </details>
+
+</div>
+
+<div class="modal" id="passModal">
+  <div class="modalBox">
+    <h2>Admin Unlock</h2>
+    <p class="help" style="text-align:left;margin-left:0">Enter passcode.</p>
+    <input id="passInput" type="password" placeholder="Passcode">
+    <div class="actions" style="padding:18px 0 0;justify-content:flex-start">
+      <button class="primary" type="button" id="unlockBtn">Unlock</button>
+      <button class="light" type="button" id="closeModal">Cancel</button>
+    </div>
+  </div>
+</div>
+
+<script>
+const STORAGE_KEY = "preworkoutSurveyResponses";
+const SETTINGS_KEY = "preworkoutSurveySettings";
+const ADMIN_PASSCODE = "matrix";
+
+const DEFAULTS = {
+  brandName:"Formula Lab",
+  heroBadge:"⚡ Pre-Workout Research",
+  heroTitle:"Build the next",
+  heroHighlight:"clean pre.",
+  heroText:"Quick survey. Real gym feedback. Help shape a cleaner pre-workout before the formula is built.",
+
+  trainingGoals:[
+    "Muscle","Strength","Fat loss","Sports","General fitness","Endurance","Powerlifting","Bodybuilding"
+  ],
+
+  effects:[
+    "Pump","Focus","Energy","Endurance","Better mood","Hydration","Strength output","No crash","Late-night safe","Cleaner feel"
+  ],
+
+  hates:[
+    "Jitters","Crash","Beta-alanine tingles","Nausea","Weird sweats","Bad taste","Chalky texture","Too expensive","Heart racing","Sleeplessness"
+  ],
+
+  flavors:[
+    "Blue raspberry","Sour blue raspberry","Cherry","Black cherry","Citrus","Orange mango","Watermelon","Green apple","Grape","Sour candy","Lemonade","Strawberry lemonade","Peach rings","Tropical punch"
+  ],
+
+  brands:[
+    "Ghost","Bucked Up","C4","Gorilla Mode","Ryse","Total War","Alani Nu","RAW Nutrition","Transparent Labs","Optimum Nutrition","Kaged","Nutricost","Legion Pulse","Beyond Raw Lit","Woke AF","Psychotic","Axe & Sledge","JYM","Cellucor","Redcon1","G Fuel","Ekkovision","Black Magic","Huge Supplements","BPN","1st Phorm","Rule One","Six Star","MuscleTech","Pre-Kaged","None right now"
+  ]
+};
+
+const form = document.getElementById("surveyForm");
+const preview = document.getElementById("preview");
+const statusBox = document.getElementById("statusBox");
+const progress = document.getElementById("progress");
+
+function getSettings(){
+  return JSON.parse(localStorage.getItem(SETTINGS_KEY) || JSON.stringify(DEFAULTS));
+}
+
+function saveSettings(settings){
+  localStorage.setItem(SETTINGS_KEY, JSON.stringify(settings, null, 2));
+}
+
+function getResponses(){
+  return JSON.parse(localStorage.getItem(STORAGE_KEY) || "[]");
+}
+
+function saveResponses(data){
+  localStorage.setItem(STORAGE_KEY, JSON.stringify(data, null, 2));
+  renderPreview();
+}
+
+function normalizeValue(text){
+  return String(text).trim().toLowerCase();
+}
+
+function renderChecks(containerId, name, items){
+  const el = document.getElementById(containerId);
+  el.innerHTML = items.map(item => `
+    <label class="option">
+      <input type="checkbox" name="${name}" value="${normalizeValue(item)}">
+      <span>${item}</span>
+    </label>
+  `).join("");
+}
+
+function renderBrandDatalist(brands){
+  document.getElementById("brandList").innerHTML = brands.map(b => `<option value="${b}"></option>`).join("");
+}
+
+function applySettings(){
+  const s = getSettings();
+
+  document.getElementById("brandName").textContent = s.brandName;
+  document.getElementById("heroBadge").textContent = s.heroBadge;
+  document.getElementById("heroTitle").textContent = s.heroTitle;
+  document.getElementById("heroHighlight").textContent = s.heroHighlight;
+  document.getElementById("heroText").textContent = s.heroText;
+
+  renderChecks("trainingGoalOptions","trainingGoals",s.trainingGoals);
+  renderChecks("effectOptions","effects",s.effects);
+  renderChecks("hateOptions","hates",s.hates);
+  renderChecks("flavorOptions","flavors",s.flavors);
+  renderBrandDatalist(s.brands);
+
+  document.getElementById("adminBrandName").value = s.brandName;
+  document.getElementById("adminBadge").value = s.heroBadge;
+  document.getElementById("adminHeroTitle").value = s.heroTitle;
+  document.getElementById("adminHeroHighlight").value = s.heroHighlight;
+  document.getElementById("adminHeroText").value = s.heroText;
+  document.getElementById("adminBrands").value = s.brands.join("\n");
+  document.getElementById("adminFlavors").value = s.flavors.join("\n");
+  document.getElementById("adminEffects").value = s.effects.join("\n");
+  document.getElementById("adminHates").value = s.hates.join("\n");
+
+  bindRanges();
+  updateProgress();
+}
+
+function bindRanges(){
+  document.querySelectorAll('input[type="range"]').forEach(range => {
+    const output = range.closest(".sliderCard").querySelector("output");
+    output.textContent = range.value;
+    range.oninput = () => output.textContent = range.value;
+  });
+}
+
+function getChecked(name){
+  return [...document.querySelectorAll(`input[name="${name}"]:checked`)].map(x => x.value);
+}
+
+function clamp(n,min,max){
+  return Math.max(min,Math.min(max,n));
+}
+
+function computeFormulaSignals(response){
+  const effects = response.effects;
+  const hates = response.hates;
+  const caffeine = response.caffeine.preference;
+  const sensitivity = response.caffeine.sensitivity;
+  const price = response.priceTarget;
+
+  const has = arr => effects.some(x => arr.includes(x));
+  const hatesAny = arr => hates.some(x => arr.includes(x));
+
+  const pumpDemand = clamp(response.scores.pump + (effects.includes("pump") ? 2 : 0),1,10);
+  const focusDemand = clamp(response.scores.focus + (effects.includes("focus") ? 2 : 0) + (effects.includes("better mood") ? 1 : 0),1,10);
+  const energyDemand = clamp(response.scores.energy + (effects.includes("energy") ? 2 : 0),1,10);
+  const hydrationDemand = clamp((effects.includes("hydration") ? 8 : 3) + (effects.includes("endurance") ? 1 : 0),1,10);
+  const enduranceDemand = clamp((effects.includes("endurance") ? 8 : 3) + (response.trainingGoals.includes("endurance") ? 1 : 0),1,10);
+
+  let caffeineAvoidance = sensitivity;
+  if(caffeine === "stim-free") caffeineAvoidance += 4;
+  if(caffeine === "low") caffeineAvoidance += 2;
+  if(caffeine === "high") caffeineAvoidance -= 3;
+  if(hatesAny(["jitters","crash","heart racing","sleeplessness"])) caffeineAvoidance += 2;
+
+  let stimTolerance = 11 - caffeineAvoidance;
+  if(caffeine === "high") stimTolerance += 2;
+  if(caffeine === "moderate") stimTolerance += 1;
+
+  const tingleAvoidance = hates.includes("beta-alanine tingles") ? 9 : 3;
+  const crashAvoidance = hatesAny(["crash","jitters","heart racing","sleeplessness"]) ? 9 : 4;
+  const tasteSensitivity = hatesAny(["bad taste","chalky texture","nausea"]) ? 8 : 4;
+
+  const priceSensitivity = price <= 30 ? 9 : price <= 35 ? 7 : price <= 40 ? 5 : 3;
+
+  return {
+    pumpDemand:clamp(pumpDemand,1,10),
+    focusDemand:clamp(focusDemand,1,10),
+    energyDemand:clamp(energyDemand,1,10),
+    hydrationDemand:clamp(hydrationDemand,1,10),
+    enduranceDemand:clamp(enduranceDemand,1,10),
+    caffeineAvoidance:clamp(caffeineAvoidance,1,10),
+    stimTolerance:clamp(stimTolerance,1,10),
+    tingleAvoidance:clamp(tingleAvoidance,1,10),
+    crashAvoidance:clamp(crashAvoidance,1,10),
+    tasteSensitivity:clamp(tasteSensitivity,1,10),
+    sweetnessDemand:response.flavorProfile.sweetness,
+    sournessDemand:response.flavorProfile.sourness,
+    priceSensitivity:clamp(priceSensitivity,1,10)
+  };
+}
+
+function buildResponse(){
+  const fd = new FormData(form);
+  const knowledge = Number(fd.get("knowledge") || 1);
+  const experienceWeight = Number((1 + knowledge * 0.25).toFixed(2));
+
+  const response = {
+    id: crypto.randomUUID ? crypto.randomUUID() : String(Date.now()),
+    timestamp: new Date().toISOString(),
+    knowledge,
+    experienceWeight,
+    trainingFrequency: fd.get("trainingFrequency"),
+    trainingGoals: getChecked("trainingGoals"),
+    effects: getChecked("effects"),
+    scores: {
+      pump: Number(fd.get("pumpScore")),
+      focus: Number(fd.get("focusScore")),
+      energy: Number(fd.get("energyScore"))
+    },
+    caffeine: {
+      preference: fd.get("caffeinePreference"),
+      sensitivity: Number(fd.get("caffeineSensitivity"))
+    },
+    hates: getChecked("hates"),
+    flavors: getChecked("flavors"),
+    flavorProfile: {
+      sweetness: Number(fd.get("sweetness")),
+      sourness: Number(fd.get("sourness"))
+    },
+    currentBrand: fd.get("currentBrand") || "",
+    priceTarget: Number(fd.get("priceTarget")),
+    buyFrequency: fd.get("buyFrequency") || "",
+    switchReason: fd.get("switchReason") || "",
+    contact: fd.get("contact") || ""
+  };
+
+  response.formulaSignals = computeFormulaSignals(response);
+  return response;
+}
+
+function renderPreview(){
+  preview.textContent = JSON.stringify(getResponses(), null, 2);
+}
+
+function download(filename, text, type){
+  const blob = new Blob([text], { type });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement("a");
+  a.href = url;
+  a.download = filename;
+  a.click();
+  URL.revokeObjectURL(url);
+}
+
+function toCSV(rows){
+  if(!rows.length) return "";
+
+  const flatRows = rows.map(r => ({
+    id:r.id,
+    timestamp:r.timestamp,
+    knowledge:r.knowledge,
+    experienceWeight:r.experienceWeight,
+    trainingFrequency:r.trainingFrequency,
+    trainingGoals:r.trainingGoals.join("|"),
+    effects:r.effects.join("|"),
+    pumpScore:r.scores.pump,
+    focusScore:r.scores.focus,
+    energyScore:r.scores.energy,
+    caffeinePreference:r.caffeine.preference,
+    caffeineSensitivity:r.caffeine.sensitivity,
+    hates:r.hates.join("|"),
+    flavors:r.flavors.join("|"),
+    sweetness:r.flavorProfile.sweetness,
+    sourness:r.flavorProfile.sourness,
+    currentBrand:r.currentBrand,
+    priceTarget:r.priceTarget,
+    buyFrequency:r.buyFrequency,
+    switchReason:r.switchReason,
+    contact:r.contact,
+    pumpDemand:r.formulaSignals.pumpDemand,
+    focusDemand:r.formulaSignals.focusDemand,
+    energyDemand:r.formulaSignals.energyDemand,
+    hydrationDemand:r.formulaSignals.hydrationDemand,
+    enduranceDemand:r.formulaSignals.enduranceDemand,
+    caffeineAvoidance:r.formulaSignals.caffeineAvoidance,
+    stimTolerance:r.formulaSignals.stimTolerance,
+    tingleAvoidance:r.formulaSignals.tingleAvoidance,
+    crashAvoidance:r.formulaSignals.crashAvoidance,
+    tasteSensitivity:r.formulaSignals.tasteSensitivity,
+    priceSensitivity:r.formulaSignals.priceSensitivity
+  }));
+
+  const headers = Object.keys(flatRows[0]);
+  const escape = value => `"${String(value ?? "").replaceAll('"','""')}"`;
+  return [headers.join(","), ...flatRows.map(row => headers.map(h => escape(row[h])).join(","))].join("\n");
+}
+
+function updateProgress(){
+  const selects = [...form.querySelectorAll("select[required]")];
+  const filledSelects = selects.filter(x => x.value).length;
+  const checkedGroups = ["trainingGoals","effects","hates","flavors"];
+  const checkedCount = checkedGroups.filter(name => getChecked(name).length > 0).length;
+  const total = selects.length + checkedGroups.length;
+  const done = filledSelects + checkedCount;
+  progress.style.width = Math.min(100, Math.round((done / total) * 100)) + "%";
+}
+
+function lines(id){
+  return document.getElementById(id).value.split("\n").map(x => x.trim()).filter(Boolean);
+}
+
+form.addEventListener("input", updateProgress);
+form.addEventListener("change", updateProgress);
+
+form.addEventListener("submit", e => {
+  e.preventDefault();
+  const response = buildResponse();
+  const responses = getResponses();
+  responses.push(response);
+  saveResponses(responses);
+
+  statusBox.style.display = "block";
+  form.reset();
+  bindRanges();
+  updateProgress();
+  statusBox.scrollIntoView({ behavior:"smooth", block:"center" });
+});
+
+function exportJson(){
+  download("preworkout-survey-responses.json", JSON.stringify(getResponses(), null, 2), "application/json");
+}
+
+function exportCsv(){
+  download("preworkout-survey-responses.csv", toCSV(getResponses()), "text/csv");
+}
+
+document.getElementById("downloadJsonAdmin").addEventListener("click", exportJson);
+document.getElementById("downloadCsvAdmin").addEventListener("click", exportCsv);
+
+document.getElementById("saveAdmin").addEventListener("click", () => {
+  const settings = {
+    ...getSettings(),
+    brandName:document.getElementById("adminBrandName").value.trim() || DEFAULTS.brandName,
+    heroBadge:document.getElementById("adminBadge").value.trim() || DEFAULTS.heroBadge,
+    heroTitle:document.getElementById("adminHeroTitle").value.trim() || DEFAULTS.heroTitle,
+    heroHighlight:document.getElementById("adminHeroHighlight").value.trim() || DEFAULTS.heroHighlight,
+    heroText:document.getElementById("adminHeroText").value.trim() || DEFAULTS.heroText,
+    brands:lines("adminBrands"),
+    flavors:lines("adminFlavors"),
+    effects:lines("adminEffects"),
+    hates:lines("adminHates")
+  };
+
+  saveSettings(settings);
+  applySettings();
+  alert("Admin changes saved.");
+});
+
+document.getElementById("resetAdmin").addEventListener("click", () => {
+  if(confirm("Reset admin settings?")){
+    localStorage.removeItem(SETTINGS_KEY);
+    applySettings();
+  }
+});
+
+document.getElementById("lockAdmin").addEventListener("click", () => {
+  document.getElementById("adminPanel").style.display = "none";
+  document.getElementById("dataPanel").style.display = "none";
+});
+
+document.addEventListener("keydown", e => {
+  if(e.key === "~" || e.key === "`"){
+    document.getElementById("passModal").style.display = "flex";
+    setTimeout(() => document.getElementById("passInput").focus(), 50);
+  }
+});
+
+document.getElementById("closeModal").addEventListener("click", () => {
+  document.getElementById("passModal").style.display = "none";
+});
+
+document.getElementById("unlockBtn").addEventListener("click", () => {
+  const pass = document.getElementById("passInput").value.trim();
+  if(pass === ADMIN_PASSCODE){
+    document.getElementById("adminPanel").style.display = "block";
+    document.getElementById("dataPanel").style.display = "block";
+    document.getElementById("passModal").style.display = "none";
+    document.getElementById("passInput").value = "";
+    document.getElementById("adminPanel").scrollIntoView({behavior:"smooth"});
+  } else {
+    alert("Wrong passcode.");
+  }
+});
+
+document.getElementById("passInput").addEventListener("keydown", e => {
+  if(e.key === "Enter") document.getElementById("unlockBtn").click();
+});
+
+applySettings();
+renderPreview();
+</script>
+</body>
+</html>
