@@ -717,6 +717,29 @@ const STORAGE_KEY = "preworkoutSurveyResponses";
 const SETTINGS_KEY = "preworkoutSurveySettings";
 const ADMIN_PASSCODE = "matrix";
 
+const SUPABASE_URL = "https://nsymdburixtqmmgtjzww.supabase.co";
+const SUPABASE_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im5zeW1kYnVyaXh0cW1tZ3Rqend3Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzgwMzE0MDQsImV4cCI6MjA5MzYwNzQwNH0.j-aXvPkfljW5AUS-Xsp0IPClh-UkrPRqG5SYDP1kMJg";
+
+async function sendToSupabase(response){
+  const res = await fetch(`${SUPABASE_URL}/rest/v1/survey_responses`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+      "apikey": SUPABASE_ANON_KEY,
+      "Authorization": `Bearer ${SUPABASE_ANON_KEY}`,
+      "Prefer": "return=minimal"
+    },
+    body: JSON.stringify({
+      response: response
+    })
+  });
+
+  if(!res.ok){
+    const err = await res.text();
+    throw new Error(err);
+  }
+}
+
 const DEFAULTS = {
   brandName:"Formula Lab",
   heroBadge:"⚡ Pre-Workout Research",
@@ -992,12 +1015,26 @@ function lines(id){
 form.addEventListener("input", updateProgress);
 form.addEventListener("change", updateProgress);
 
-form.addEventListener("submit", e => {
+form.addEventListener("submit", async e => {
   e.preventDefault();
+
   const response = buildResponse();
+
   const responses = getResponses();
   responses.push(response);
   saveResponses(responses);
+
+  try{
+    await sendToSupabase(response);
+    statusBox.textContent = "Submitted successfully. Thanks for helping build the formula.";
+    statusBox.style.background = "rgba(55,242,155,.18)";
+    statusBox.style.borderColor = "rgba(14,160,92,.25)";
+  }catch(err){
+    console.error(err);
+    statusBox.textContent = "Saved locally, but cloud sync failed.";
+    statusBox.style.background = "rgba(255,210,63,.18)";
+    statusBox.style.borderColor = "rgba(255,138,0,.25)";
+  }
 
   statusBox.style.display = "block";
   form.reset();
